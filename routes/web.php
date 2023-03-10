@@ -13,14 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 
 Route::resource('category', App\Http\Controllers\CategoryController::class);
 
-Route::resource('image', App\Http\Controllers\ImageController::class);
+/*Route::resource('image', App\Http\Controllers\ImageController::class);*/
 
 Route::resource('like', App\Http\Controllers\LikeController::class);
 
@@ -28,13 +26,14 @@ Route::resource('collection', App\Http\Controllers\CollectionController::class);
 
 Route::resource('comment', App\Http\Controllers\CommentController::class);
 
+Route::get('portfolio',[\App\Http\Controllers\PagesController::class,'portfolio'])->name('portfolio');
 
-Route::resource('category', App\Http\Controllers\CategoryController::class);
+Route::get('wedding',[\App\Http\Controllers\PagesController::class,'wedding'])->name('wedding');
 
-Route::resource('image', App\Http\Controllers\ImageController::class);
+Route::get('album',[\App\Http\Controllers\PagesController::class,'album'])->name('album');
 
-Route::resource('like', App\Http\Controllers\LikeController::class);
+Route::get('/',[\App\Http\Controllers\PagesController::class,'home'])->name('welcome');
 
-Route::resource('collection', App\Http\Controllers\CollectionController::class);
+Route::get('/approve/image/{image}',[\App\Http\Controllers\ImageController::class,'approve'])->name('admin.image.approve');
 
-Route::resource('comment', App\Http\Controllers\CommentController::class);
+Route::get('image/{image}',[\App\Http\Controllers\PagesController::class,'show'])->name('image.item.show');

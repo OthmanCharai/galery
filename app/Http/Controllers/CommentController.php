@@ -13,7 +13,7 @@ class CommentController extends Controller
 {
     public function index(Request $request): View
     {
-        $comments = Comment::all();
+        $comments = (auth()->user()->hasRole('super_admin'))?Comment::all():Comment::where('user_id',auth()->user()->id)->get();
 
         return view('comment.index', compact('comments'));
     }

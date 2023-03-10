@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Image extends Model
+class Image extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory,InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +27,11 @@ class Image extends Model
         'date',
         'tags',
         'approved_at',
+        'category_id',
+        'user_id'
     ];
+
+    protected $appends=['cover','approved'];
 
     /**
      * The attributes that should be cast to native types.
@@ -52,5 +58,20 @@ class Image extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCoverAttribute(){
+        return $this->media->first()->getUrl();
+    }
+
+    /**
+     * @return bool
+     */
+    public function getApprovedAttribute(): bool
+    {
+        return $this->approved_at!=null;
     }
 }

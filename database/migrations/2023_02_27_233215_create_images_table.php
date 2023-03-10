@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('lens_type');
             $table->timestamp('date');
             $table->json('tags');
-            $table->timestamp('approved_at');
+            $table->foreignId('category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->timestamp('approved_at')->nullable();
             $table->timestamps();
         });
     }

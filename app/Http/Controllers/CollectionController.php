@@ -13,7 +13,7 @@ class CollectionController extends Controller
 {
     public function index(Request $request): View
     {
-        $collections = Collection::all();
+        $collections =(auth()->user()->hasRole('super_admin'))? Collection::all():Collection::where('user_id',auth()->user()->id)->get();
 
         return view('collection.index', compact('collections'));
     }

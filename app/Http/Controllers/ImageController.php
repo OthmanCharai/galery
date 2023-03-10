@@ -7,13 +7,15 @@ use App\Http\Requests\ImageUpdateRequest;
 use App\Models\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ImageController extends Controller
 {
     public function index(Request $request): View
     {
-        $images = Image::all();
+        dd('ok');
+        $images =(auth()->user()->hasRole('super_admin'))? Image::all():Image::where('user_id',auth()->user()->id)->get();
 
         return view('image.index', compact('images'));
     }
@@ -25,7 +27,7 @@ class ImageController extends Controller
 
     public function store(ImageStoreRequest $request): RedirectResponse
     {
-        $image = Image::create($request->validated());
+        Auth::user()->images()->save(new Image($request->validated()));
 
         $request->session()->flash('image.id', $image->id);
 
@@ -56,5 +58,15 @@ class ImageController extends Controller
         $image->delete();
 
         return redirect()->route('image.index');
+    }
+
+    public function approve(Image $image): RedirectResponse
+    {
+        $image->update([
+            'approved_at'=>now()
+        ]);
+        request()->session()->flash('image.id', $image->id);
+
+        return redirect()->route('filament.resources.images.index');
     }
 }

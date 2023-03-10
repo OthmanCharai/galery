@@ -19,6 +19,9 @@ class CollectionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
+
     public static function form(Form $form): Form
     {
         return $form
@@ -39,12 +42,12 @@ class CollectionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('image.title'),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('user.name')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('image.title')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('created_at')->sortable()->searchable()
                     ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('updated_at')->sortable()->searchable()
                     ->dateTime(),
             ])
             ->filters([
@@ -57,14 +60,14 @@ class CollectionResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -72,5 +75,11 @@ class CollectionResource extends Resource
             'create' => Pages\CreateCollection::route('/create'),
             'edit' => Pages\EditCollection::route('/{record}/edit'),
         ];
-    }    
+    }
+    protected static function getNavigationBadge(): ?string
+    {
+        return (auth()->user()->hasRole('super_admin'))? Collection::count():count(Collection::where('user_id',auth()->user()->id)->get());
+
+    }
+
 }

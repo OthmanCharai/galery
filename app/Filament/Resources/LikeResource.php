@@ -17,7 +17,10 @@ class LikeResource extends Resource
 {
     protected static ?string $model = Like::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-heart';
+
+    protected static ?string $recordTitleAttribute = 'title';
+
 
     public static function form(Form $form): Form
     {
@@ -36,11 +39,11 @@ class LikeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('image.title'),
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('user.name')->searchable()->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('image.title')->searchable()->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('created_at')->searchable()->sortable()->searchable()
                     ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('updated_at')->searchable()->sortable()->searchable()
                     ->dateTime(),
             ])
             ->filters([
@@ -53,14 +56,14 @@ class LikeResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -68,5 +71,10 @@ class LikeResource extends Resource
             'create' => Pages\CreateLike::route('/create'),
             'edit' => Pages\EditLike::route('/{record}/edit'),
         ];
-    }    
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return (auth()->user()->hasRole('super_admin'))? Like::count():count(Like::where('user_id',auth()->user()->id)->get());
+    }
 }

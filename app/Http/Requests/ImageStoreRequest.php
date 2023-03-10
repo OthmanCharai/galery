@@ -28,6 +28,7 @@ class ImageStoreRequest extends FormRequest
             'date' => ['required'],
             'tags' => ['required', 'json'],
             'approved_at' => ['required'],
+            'category_id'=>'required'
         ];
     }
 }

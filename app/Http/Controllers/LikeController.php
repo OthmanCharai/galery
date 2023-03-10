@@ -13,7 +13,7 @@ class LikeController extends Controller
 {
     public function index(Request $request): View
     {
-        $likes = Like::all();
+        $likes =(auth()->user()->hasRole('super_admin'))? Like::all():Like::where('user_id',auth()->user()->id)->get();
 
         return view('like.index', compact('likes'));
     }
