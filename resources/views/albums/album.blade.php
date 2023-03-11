@@ -1,5 +1,6 @@
 @extends('layouts.layout')
 @section('content')
+
     <div class="container-full no-padd">
         <div class="hero">
             <div class="portfolio-wrapper margin-lg-40b">
@@ -8,9 +9,7 @@
                         <div class="wpb_wrapper">
                             @foreach($images as $image)
                                 @foreach($image->media as $item)
-                                    <div class="item block_item_1 album-2">
-
-
+                                    <div oncontextmenu="showOptions(event,{{$image->id}})" id="maydev" class="item block_item_1 album-2">
                                         <a href="{{route('image.item.show',$image->id)}}" class="item-link gridrotate-alb default " target="_self">
                                             <div class="item-img">
                                                 <div class="images-one">
@@ -119,5 +118,37 @@
             </div>
         </div>
 
+
     </footer>
+@endsection
+@section('js')
+    <script>
+        function showOptions(event,image){
+            // Prevent the default context menu from appearing
+            event.preventDefault()
+
+
+            const contextMenu = document.getElementById('context-menu');
+            const like=document.getElementById('like');
+            like.href="/like/"+image;
+            const collection=document.getElementById('collection');
+            collection.href="/collection/"+image
+            contextMenu.style.left = event.pageX+"px";
+            contextMenu.style.top = event.pageY+"px";
+
+
+            // Show the custom context menu
+            contextMenu.style.display = 'block';
+            // Hide the context menu when the user clicks outside of it
+            document.addEventListener('click', function(event) {
+                if (!contextMenu.contains(event.target)) {
+                    contextMenu.style.display = 'none';
+                }
+            });
+
+            document.body.appendChild(contextMenu);
+
+        }
+
+    </script>
 @endsection

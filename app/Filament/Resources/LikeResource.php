@@ -30,7 +30,7 @@ class LikeResource extends Resource
                     ->relationship('user', 'name')
                     ->required(),
                 Forms\Components\Select::make('image_id')
-                    ->relationship('image', 'title')
+                    ->relationship('image', 'id')
                     ->required(),
             ]);
     }
@@ -40,7 +40,7 @@ class LikeResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')->searchable()->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('image.title')->searchable()->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('image.id')->searchable()->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('created_at')->searchable()->sortable()->searchable()
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')->searchable()->sortable()->searchable()

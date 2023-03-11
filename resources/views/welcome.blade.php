@@ -16,7 +16,7 @@
                                             <div class="izotope-container-2">
                                                 @foreach($categories as $category)
 
-                                                <div class="fullwidth full-single item-single item{{$category->id}}">
+                                                <div  class="fullwidth full-single item-single item{{$category->id}}">
 
                                                     <a href="{{$category->cover}}"
                                                         class="gallery-item s-back-switch">
@@ -26,6 +26,7 @@
                                                         <div class="info-content">
                                                             <div class="vertical-align">
                                                                 <h5>{{$category->name}}</h5>
+                                                                <h5></h5>
 
 
                                                             </div>

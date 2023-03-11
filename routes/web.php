@@ -20,11 +20,11 @@ Route::resource('category', App\Http\Controllers\CategoryController::class);
 
 /*Route::resource('image', App\Http\Controllers\ImageController::class);*/
 
-Route::resource('like', App\Http\Controllers\LikeController::class);
+/*Route::resource('like', App\Http\Controllers\LikeController::class);
 
 Route::resource('collection', App\Http\Controllers\CollectionController::class);
 
-Route::resource('comment', App\Http\Controllers\CommentController::class);
+Route::resource('comment', App\Http\Controllers\CommentController::class);*/
 
 Route::get('portfolio',[\App\Http\Controllers\PagesController::class,'portfolio'])->name('portfolio');
 
@@ -37,3 +37,8 @@ Route::get('/',[\App\Http\Controllers\PagesController::class,'home'])->name('wel
 Route::get('/approve/image/{image}',[\App\Http\Controllers\ImageController::class,'approve'])->name('admin.image.approve');
 
 Route::get('image/{image}',[\App\Http\Controllers\PagesController::class,'show'])->name('image.item.show');
+
+
+Route::get('like/{image}',[\App\Http\Controllers\LikeController::class,'store'])->name('like');
+
+Route::get('collection/{image}',[\App\Http\Controllers\CollectionController::class,'store'])->name('collection');

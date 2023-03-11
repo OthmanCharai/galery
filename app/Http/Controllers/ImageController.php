@@ -14,7 +14,7 @@ class ImageController extends Controller
 {
     public function index(Request $request): View
     {
-        dd('ok');
+
         $images =(auth()->user()->hasRole('super_admin'))? Image::all():Image::where('user_id',auth()->user()->id)->get();
 
         return view('image.index', compact('images'));
@@ -69,4 +69,6 @@ class ImageController extends Controller
 
         return redirect()->route('filament.resources.images.index');
     }
+
+
 }

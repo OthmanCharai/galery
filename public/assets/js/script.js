@@ -531,11 +531,31 @@
         if($('.popup-image').length){
             $('.popup-image').lightGallery({
                 selector: 'this',
+                plugins: [lgContextmenu],
+
                 mode: 'lg-slide',
                 closable: false,
                 iframeMaxWidth: '80%',
                 download: true,
-                thumbnail: true
+                share: true,
+                like: true,
+                thumbnail: true,
+                contextMenu: {
+                    selector: 'li',
+                    items: {
+                        zoomIn: {name: 'Zoom In'},
+                        zoomOut: {name: 'Zoom Out'},
+                        sep1: "---------",
+                        rotateLeft: {name: 'Rotate Left'},
+                        rotateRight: {name: 'Rotate Right'},
+                        sep2: "---------",
+                        download: {name: 'Download'},
+                        sep3: "---------",
+                        toggleThumb: {name: 'Toggle thumbnail'},
+                        toggleFullscreen: {name: 'Toggle fullscreen'},
+                        close: {name: 'Close'}
+                    }
+                }
             });
         }
     }
@@ -1231,6 +1251,8 @@
                 iframeMaxWidth: '80%',
                 download: true,
                 thumbnail: true,
+                share: true,
+                like: true,
                 exThumbImage: 'href',
                 showThumbByDefault: thumb
             });
@@ -1266,6 +1288,8 @@
             closable: false,
             iframeMaxWidth: '80%',
             download: true,
+            share: true,
+            like: true,
             thumbnail: true
         });
     }
@@ -1276,6 +1300,8 @@
             closable: false,
             iframeMaxWidth: '80%',
             download: true,
+            share: true,
+            like: true,
             thumbnail: true
         });
     }
@@ -1286,6 +1312,8 @@
             mode: 'lg-slide',
             iframeMaxWidth: '80%',
             download: true,
+            share: true,
+            like: true,
             thumbnail: true
         });
     }
@@ -2107,6 +2135,8 @@
                                         closable: false,
                                         iframeMaxWidth: '80%',
                                         download: true,
+                                        share: true,
+                                        like: true,
                                         thumbnail: true,
                                         showThumbByDefault: thumb
                                     });

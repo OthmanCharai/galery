@@ -17,7 +17,9 @@ class PagesController extends Controller
      */
     public function portfolio(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        return view('portfolio.portfolio');
+        return view('portfolio.portfolio',[
+            'images'=>Image::with(['media','category'])->get()
+        ]);
     }
 
     /**
