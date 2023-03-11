@@ -12,6 +12,10 @@ use Illuminate\View\View;
 
 class CollectionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function store(Image $image): RedirectResponse
     {
         $collection = Collection::firstOrCreate(

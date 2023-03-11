@@ -82,7 +82,7 @@ class ImageResource extends Resource
                 Action::make('approved')
                     ->label('Approve')
                     ->icon('heroicon-o-check')
-                    ->authorize('super_admin')
+                    ->authorize(auth()->user()->hasRole('super_admin'))
                     ->url(fn (Image $record): string => route('admin.image.approve', $record))
             ])
             ->bulkActions([
